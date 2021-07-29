@@ -32,8 +32,11 @@ class OperacaoViewSet(viewsets.ModelViewSet):
             preco=preco,
             tipo_operacao=tipo_operacao,
             ip=ip,
-            custodia=configuracao.custodia
+            custodia=configuracao.custodia,
+            taxa_saque=configuracao.taxa_saque,
+            administracao=configuracao.administracao
         )
+
         serialized_object = OperacaoSerializer(operacao)
         return Response(serialized_object.data)
 

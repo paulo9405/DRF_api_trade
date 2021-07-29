@@ -21,11 +21,7 @@ class Operacao(models.Model):
                                         default=0)
     taxa_saque = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     ip = models.GenericIPAddressField(null=True, blank=True)
-
-    TIPO = (
-        ('Resgate', 'Resgate'),
-        ('Aplicacao', 'Aplicacao'),
-    )
+    TIPO = (('Resgate', 'Resgate'), ('Aplicacao', 'Aplicacao'),)
     tipo_operacao = models.CharField(max_length=50, choices=TIPO)
     saldo = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
