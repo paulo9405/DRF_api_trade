@@ -3,15 +3,17 @@ from rest_framework import serializers
 from operacoes.models import Operacao
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from ativos.api.serializers import AtivoSerializer
 
 
 class OperacaoSerializer(ModelSerializer):
+    ativo = AtivoSerializer()
+
     class Meta:
         model = Operacao
         fields = [
             'id',
-            'usuario_id',
-            'ativo_id',
+            'usuario',
             'ativo',
             'quantidade',
             'preco',
@@ -27,7 +29,7 @@ class SaldoSerializer(ModelSerializer):
 
 
 class UserSerializer(ModelSerializer):
-    saldo = serializers.SerializerMethodField(read_only=True)
+    saldo = serializers.SerializerMethodField(read_only=True) # ler o saldo por usuario,
 
 
     class Meta:
