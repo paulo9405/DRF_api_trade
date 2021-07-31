@@ -27,11 +27,11 @@ class Operacao(models.Model):
 
     def save(self, *args, **kwargs):
         if self.tipo_operacao == 'Aplicacao':
-            self.saldo = (self.quantidade * self.preco) -\
+            self.saldo = (float(self.quantidade) * float(self.preco)) -\
                          float(self.custodia) - float(self.administracao)
 
         elif self.tipo_operacao == 'Resgate':
-            self.saldo = ((self.quantidade * self.preco) * -1) -\
+            self.saldo = ((float(self.quantidade) * float(self.preco))* -1) -\
                          float(self.taxa_saque)
 
         return super(Operacao, self).save(*args, **kwargs)

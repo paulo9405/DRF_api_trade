@@ -18,7 +18,7 @@ class OperacaoViewSet(viewsets.ModelViewSet):
         return Operacao.objects.filter(usuario_id=self.request.user.id)
 
     def create(self, request, *args, **kwargs):
-        configuracao = Configuracao.objects.get(id=1)
+        configuracao = Configuracao.objects.all().first()
         id_usuario = request.user.id
         ip = request.META.get("REMOTE_ADDR")
         ativo_id = request.data.get('ativo')

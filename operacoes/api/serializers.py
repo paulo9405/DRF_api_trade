@@ -1,36 +1,42 @@
+from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from operacoes.models import Operacao
 from django.contrib.auth.models import User
 from django.db.models import Sum
-from ativos.api.serializers import AtivoSerializer
 
 
 class OperacaoSerializer(ModelSerializer):
-    ativo = AtivoSerializer()
-
+    ativo_nome = SerializerMethodField()
+    modalidade = SerializerMethodField()
+    nome_usuario = SerializerMethodField()
     class Meta:
         model = Operacao
         fields = [
             'id',
             'usuario',
+            'nome_usuario',
             'ativo',
+            'ativo_nome',
+            'modalidade',
             'quantidade',
             'preco',
             'tipo_operacao',
             'data',
         ]
 
+    def get_ativo_nome(self, obj):
+        return '%s' % (obj.ativo)
 
-class SaldoSerializer(ModelSerializer):
-    class Meta:
-        model = Operacao
-        fields = ['id', 'ativo', 'saldo']
+    def get_modalidade(self, obj):
+        return '%s' % (obj.ativo.modalidade)
+
+    def get_nome_usuario(self, obj):
+        return '%s' % (obj.usuario)
 
 
 class UserSerializer(ModelSerializer):
-    saldo = serializers.SerializerMethodField(read_only=True) # ler o saldo por usuario,
-
+    saldo = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
